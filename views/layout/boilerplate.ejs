@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Application</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="../public/css/show.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="css/starability-all.min.css"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+body {
+    font-family: 'Roboto', sans-serif;
+    background-size: cover;
+    background-position: center center;
+    font-smoothing: antialiased;
+  }
+  li{
+    height: fit-content !important;
+    width: fit-content !important;
+    font-size: 25px;
+  }
+  .message{
+    background-color: white;
+    margin-top: 10px;
+    text-align: start;
+    width: fit-content;
+    padding: 10px;
+    margin-left: 10px;
+    border-radius: 5px;
+  }
+  .message2{
+    background-color: lightblue;
+    margin-top: 10px;
+    width: fit-content;
+    position: relative;
+    left:70px;
+    width: 150px;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  #open-chat-button {
+            font-size: 50px;
+            color: #4b6cb7;
+            position: fixed;
+            right: 60px;
+            bottom: 25px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        #cloud-container {
+            position: fixed;
+            right: 5px;
+            bottom: 95px;
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+
+        .cloud {
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 10px;
+            display: inline-block;
+            margin: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+    </style>    
+</head>
+<body style="background-color:#f2e9e4;">
+  
+
+    <%- include("../partials/navbar")  %>
+    <%- include("../partials/flash")  %>
+
+    <%- body -%>
+    <div id="chat-container" style="border: 2px solid black; height: 300px; width: 250px; background-color: #e5e5e5; position: fixed; right: 10px; bottom: 95px; overflow: hidden; display: flex; flex-direction: column; display: none;">
+      <div id="chat-messages" style="max-height: 250px; overflow-y: auto; color: black;min-height: 252px;">
+          <!-- Your chat messages go here -->
+      </div>
+      <form style="display: flex; margin-top: auto;" onsubmit="event.preventDefault() ; sendMessage()" >
+          <input type="text" id="user-message" style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; width: 200px;" placeholder="Type a message..." />
+          <!-- <button onclick="sendMessage()" style="background-color: #007bff; color: #fff; padding: 5px; border: none; border-radius: 5px; cursor: pointer;">Send</button> -->
+      </form>
+    </div>
+  
+  
+  
+  
+  
+    <!-- <i id="open-chat-button" class="fa-solid fa-robot" style="font-size: 50px;color: #eb0000;position:fixed; right: 40px; bottom: 25px;"  onclick="toggleChat()"></i> -->
+    <!-- <i id="open-chat-button" class="fa-solid fa-robot" style="font-size: 50px; color: #3498db; position: fixed; right: 40px; bottom: 25px; background-color: #ffffff; border-radius: 50%; padding: 10px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); transition: background-color 0.3s, transform 0.3s;" onclick="toggleChat()"></i> -->
+    <!-- <i id="open-chat-button" class="fa-solid fa-robot" style="font-size: 50px; color: #333; position: fixed; right: 40px; bottom: 25px; background-color: #f0f0f0; border-radius: 50%; padding: 10px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); transition: background-color 0.3s, transform 0.3s;" onclick="toggleChat()"></i> -->
+    <!-- <i id="open-chat-button" class="fa-solid fa-robot" style="font-size: 50px; color: #4b6cb7; position: fixed; right: 40px; bottom: 25px; background-color: #f0f0f0; border-radius: 50%; padding: 10px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); transition: background-color 0.3s, transform 0.3s;" onclick="toggleChat()"></i> -->
+    <i id="open-chat-button" class="fa-solid fa-robot" onclick="toggleChat()"></i>
+    <div id="cloud-container">
+      <div class="cloud">Hey There!</div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>  
+    <script src="/public/js/cartTemp.js"></script>
+    <script>
+function toggleChat() {
+    const chatContainer = document.getElementById('chat-container');
+    const chatText = document.getElementsByClassName("cloud")[0];
+    const cloudContainer = document.getElementById("cloud-container");
+
+    if (chatContainer.style.display === 'none') {
+        // If chat container is currently hidden, show it and fade in the text
+      
+        chatContainer.style.display = 'block';
+        chatText.style.opacity = "0";
+        cloudContainer.style.opacity = '0';
+    } else {
+        // If chat container is currently visible, hide it and fade out the text
+        chatContainer.style.display = 'none';
+        chatText.style.opacity = "1";
+        cloudContainer.style.opacity = '1';
+    }
+}
+
+    </script>
+    <script>
+      function appendMessage(user, bot) {
+        const chatMessages = document.getElementById('chat-messages');
+        const messageDiv = document.createElement('div');
+        const messageDiv2 = document.createElement('div');
+        messageDiv.className = 'message';
+        messageDiv2.className = 'message2';
+        messageDiv.innerHTML = `<span class="user-message">User: ${user}</span>`;
+        messageDiv2.innerHTML = `<span class="bot-message">Bot: ${bot}</span>`;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.appendChild(messageDiv2);
+      }
+
+      function sendMessage() {
+        const userMessage = document.getElementById('user-message').value;
+
+
+        fetch('/chat/predict', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({userMessage }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const botResponse = data.botResponse;
+            
+            appendMessage(userMessage, botResponse);
+          });
+
+        document.getElementById('user-message').value = ''; 
+      }
+    </script>
+    
+</body>
+</html>

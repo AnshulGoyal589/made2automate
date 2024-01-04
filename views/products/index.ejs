@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot</title>
+    <style>
+      #chat-container {
+        border: 1px solid #ccc;
+        margin: 0 auto;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #f7f7f7;
+      }
+      #chat-messages{
+        color: green !important;
+        background-color: black;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="chat-container">
+      <div id="chat-messages">
+
+      </div>
+      <input type="text" id="user-message" placeholder="Type a message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+      function appendMessage(user, bot) {
+        const chatMessages = document.getElementById('chat-messages');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message';
+        messageDiv.innerHTML = `<span class="user-message">User: ${user}</span><br /><span class="bot-message">Bot: ${bot}</span>`;
+        chatMessages.appendChild(messageDiv);
+      }
+
+      function sendMessage() { 
+        const userMessage = document.getElementById('user-message').value;
+
+        fetch('/chat/predict', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({userMessage }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const botResponse = data.botResponse;
+            
+            appendMessage(userMessage, botResponse);
+          });
+
+        document.getElementById('user-message').value = ''; 
+      }
+    </script>
+  </body>
+</html>

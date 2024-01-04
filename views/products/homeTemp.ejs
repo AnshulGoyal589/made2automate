@@ -1,0 +1,267 @@
+<% layout('layout/boilerplate') -%>
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --primary-bg: #D3D3D3;
+            --text-color: #000;
+            --link-color: #00f;
+            --hover-bg: #f1faee;
+            --delete-bg: #ff0000;
+            --heart-color: #ff0000;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: white;
+            color: var(--text-color);
+
+        }
+        .btn {
+            display: inline-block;
+            padding: 5px;
+            border: 2px solid var(--primary-bg);
+            text-align: center;
+            cursor: pointer;
+        }
+        .fa-heart {
+            color: var(--heart-color);
+            display: inline-block;
+            position: relative;
+        }
+        #hero {
+            border: 2px solid var(--text-color);
+            width: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--primary-bg);
+        }
+        #hero:hover {
+            box-shadow: 5px 5px 10px white, -5px -5px 10px white;
+            border: 5px solid var(--text-color) !important;
+            cursor: pointer;
+        }
+        img:hover {
+            transform: scale(1.1);
+            transition-duration: 0.7s;
+        }
+        #delete {
+            background-color: #D3D3D3;
+            border:2px solid #D3D3D3;
+        }
+        #show {
+            background-color: #D3D3D3;
+            border: 2px solid #D3D3D3;
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }  
+  form {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  label {
+    font-weight: bold;
+  }
+  input[type="range"] {
+    width: 100%;
+    margin: 10px 0;
+    -webkit-appearance: none;
+    height: 10px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #007bff;
+    cursor: pointer;
+  }
+  output {
+    display: block;
+    font-weight: bold;
+    color: #007bff;
+  }
+  input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0; 
+  }
+  .cat-item {
+    margin: 10px 0; 
+  }
+  .cat-item a {
+    text-decoration: none; 
+    color: #007bff; 
+    font-weight: bold; 
+    transition: color 0.3s; 
+  }
+  .cat-item a:hover {
+    color: #ff5722; 
+  }
+  .d-flex {
+    display: flex;
+    align-items: center;
+    position: relative;
+    right: 15px;
+  }
+  select#sizeDropdown {
+    width: 150px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  #li {
+    font-size: 24px;
+    margin-left: 10px;
+    color: #007bff;
+    cursor: pointer;
+  }
+  #li:hover {
+    color: #ff5722; 
+  }
+  #btnn:hover{
+    background-color: green;
+    color: green;
+  }
+  @media (max-width: 768px) {
+        #hero {
+            width: 100%;
+        }
+        #hero img {
+            width: 100%;
+            height: auto;
+        }
+        #hero h3 {
+            font-size: 18px;
+        }
+        .sidebar-main {
+            display: none;
+        }
+        #delete,
+        #show {
+            margin-left: 0;
+            width: 100%;
+        }
+        #btnn {
+            width: 100%;
+            margin-right: 0;
+        }
+        .btn {
+            width: 100%;
+        }
+        form {
+            max-width: 100%;
+            text-align: center;
+        }
+        select#sizeDropdown {
+            width: 100%;
+        }
+        #li {
+            font-size: 18px;
+            margin-left: 5px;
+        }
+    }
+</style>
+</head>
+<div style="background-color: white;">
+
+    <h3 style="text-align: center;font-size: 35px;background-color: #f2e9e4;padding: 50px;" >OUR PREMIUM COLLECTION</h3>
+        <div style="display: flex;padding-left: 80px;">
+        <div style="width: 330px;border:2px solid black;height: 100vh;padding: 20px;background-color: #ddb892;" >
+            <div class="sidebar-main">
+                <div class="ast-filter-wrap"><div id="block-4" class="ast-woo-sidebar-widget widget widget_block"><div data-block-name="woocommerce/product-search" data-has-label="false" data-label="" data-form-id="wc-block-product-search-0" class="wc-block-product-search alignfull wp-block-woocommerce-product-search">
+                    <form class="d-flex " role="search"  style="margin-bottom: 30px;margin-left: 5px;padding-top: 10px;" action="/products/specific" method="POST" >
+                        <input class="form-control me-2 col-10" type="search" placeholder="Search" aria-label="Search" id="searchBar" name="input">
+                        <button id="btnn" class="btn btn-outline-success" type="submit" style="background-color: white;" >Search</button>
+                      </form>
+                      <form class="d-flex " role="search"  style="width:150px;align-items: center;position: relative;right:15px;margin-bottom: 80px;">
+                        <select id="sizeDropdown" name="size">
+                          <option value="" disabled selected hidden>Sorting Order</option>
+                          <option value="name">Name A to Z</option>
+                          <option value="-name">Name Z to A</option>
+                          <option value="-price">Price H to L</option>
+                          <option value="price">Price L to H</option>
+                        </select>
+                        <span><i id="li" class="fa-solid fa-filter fa-2xl"></i></span>
+                      </form>
+                    <form action="/products/searchPrice" method="post" style="margin-bottom: 80px;" >
+                        <label for="priceRange">Price Range:</label>
+                        <input type="range" id="priceRange" name="input" min="0" max="129000" step="1000">
+                        <output for="priceRange" id="priceOutput">50000</output><br>
+                        <input type="submit" value="Search">
+                    </form>
+                </div>
+                <li class="cat-item cat-item-21"><a href="/products/specificCategory/men">Men</a></li>
+                <li class="cat-item cat-item-22"><a href="/products/specificCategory/women">Women</a></li></ul>
+                </div>
+            </div>
+                </div>
+        </div>   
+        <div style="width:990px;height:100%;display: flex;flex-wrap: wrap;padding-left: 60px;border:2px solid black;background-color: #edede9;">
+            <%for(let product of products){%>
+                <div id="hero" onclick="window.location.href='/products/go?id=<%=product._id%>'" style="border:2px solid black;width:250px;height: 400px;display: flex;flex-direction: column;justify-content:center;align-items: center;background-color:#D3D3D3;margin: 20px;">
+                    <div style="height:200px;width:100%;overflow: hidden;" id="img"><img src="<%=product.img%>" alt="image not available" style="height:200px;width:100%"></div>
+                    <h3 style="text-align: center;" ><%= product.name  %></h3>
+                    <div style="width: 100%;display: flex;flex-direction: column;align-items: center;margin-bottom: 10px;">
+                        <h5 style="font-weight: 500;" >Price:<%= product.price  %>$</h5>
+                        <div style="text-align: center; height: 80px ; width: 95% ; overflow-y: scroll ;" ><%= product.desc  %></div>
+                    </div>
+                    <div style="width: 100%;display: flex;justify-content: space-around;"  >
+                        <% if(currentUser){ %> 
+                        <% if(currentUser.identity==='seller'){ %> 
+                            <form action="/products/<%=product._id%>?_method=DELETE" method="post" style="display: inline-block;">
+                                <button  id="delete" ><i class="fa-solid fa-2xl fa-trash" style="color: #ff0000;"></i><br></button>
+                            </form>
+                        <% } %>
+                        <% } %>
+                        <form action="/products/<%=product._id%>" method="get" style="display: inline-block;">
+                            <button  id="show" ><i class="fa-solid fa-circle-info fa-2xl" style="color:green;"></i><br></button>
+                        </form>
+                    </div>
+                </div>
+            <%}%>
+            </div>
+        </div>
+</div>
+<script>
+    function toggleHeartClass(event) {
+      var heartIcon = event.target;
+        heartIcon.classList.add("fa-solid");
+    }
+  </script>
+  <script>
+    document.getElementById('sizeDropdown').addEventListener('change', function() {
+    const selectedSize = this.value;
+    console.log('Selected size:', selectedSize);
+    window.location.href=`/products/sort/${selectedSize}`;
+  });
+  </script>
+      <script>
+        const priceRange = document.getElementById("priceRange");
+        const priceOutput = document.getElementById("priceOutput");
+        priceRange.addEventListener("input", function () {
+            priceOutput.value = priceRange.value;
+        });
+    </script>
+

@@ -1,0 +1,231 @@
+<% layout('layout/boilerplate') -%>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/starability-all.min.css"/>
+    <style>
+        body{
+            background-color: #d6ccc2;
+            color:black;
+        }
+        #card{
+            border:2px solid black;
+            width:450px;
+            display: flex;
+            flex-direction: column;
+            height: 580px;
+            align-items: center;
+            z-index: 1000;
+            background-color: #d6ccc2;
+        }
+        #formdiv{
+            border:4px solid black;
+            width:750px;
+            height: fit-content;
+            text-align: center;
+        }  
+        #button{
+            background-color: green;
+            color:black;
+        }
+        #revRating{
+            /* border:2px solid black; */
+            /* background-color: #415a77; */
+            color:black;
+            height:50px;
+            
+        }
+        #ownerRevText{
+            /* border:2px solid black; */
+            /* background-color: #778da9; */
+            color:black;
+            height:fit-content;
+            margin-top: 10px;
+            font-size: 18px;
+
+        }
+        #reviewContainer{
+            border:2px solid gray;
+            padding:5px;
+            margin:5px;
+
+        }
+        img{
+            width:100%;
+            height:100%;
+            /* border-bottom: 2px solid black; */
+        }
+        #img{
+            width:100%;
+            height:70%;
+            overflow: hidden;
+            
+            border-bottom: 2px solid black;
+        }
+        img:hover{
+            transform: scale(1.1);
+            transition-duration: 0.7s;
+        }
+        
+        #main{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap:100px;
+            padding-top:0 ;
+            z-index: 0;
+            overflow: hidden;
+        }
+        #delete{
+            /* border:2px solid white; */
+            text-align: center;
+            text-decoration: none;
+            color:black;
+            height: fit-content;
+            width: fit-content;
+            background-color: #D6CCC2;
+            margin-top:4px;
+            box-shadow: none;
+            border: none;
+            /* border:10px solid red; */
+        }
+        #update{
+            /* border:2px solid white; */
+            text-decoration: none;
+            text-align: center;
+            color:black;
+            margin-top:4px;
+        }
+        #addToCart{
+            /* border:2px solid white; */
+            text-decoration: none;
+            text-align: center;
+            color:black;
+            margin-top:4px;
+
+
+        }
+        #changes{
+            display: flex;
+            flex-direction: row;
+            gap:30px;
+        }
+        #chanesForm{
+            width:fit-content;
+            height:fit-content;
+        }
+        .star {
+        color: #ccc; /* Default star color */
+        font-size: 50px; /* Adjust the star size */
+        cursor: pointer;
+        }
+    </style>
+</head>
+
+<br><br>
+<div id="main">
+<div id="card">
+
+    <div id="img"><img src="<%=product.img%>" alt="image not available"></div>  
+    <h2 style="margin-top:15px;"><%= product.name  %></h2>+
+    <h4>Price: <%= product.price  %>₹</h4>
+    <h5 style="margin-bottom: 19px;text-align: center;"><%= product.desc  %></h5>
+    <!-- <h5 style="color: green;">Average Rating: <%= product.avgRating%> &starf; </h5> -->
+    <div id="changes">
+        
+        <% if(currentUser){ %>    
+        <% if(currentUser.identity==='seller'){ %>    
+            <form action="/products/<%=product._id%>?_method=DELETE" method="post" id="changesForm">
+                <button  id="delete" ><i class="fa-solid fa-trash fa-2xl " style="color: #ed1707;width: fit-content;height:fit-content"></i><br><br>DELETE</button>
+            </form>
+        <% } %>
+        <% } %>
+        <% if(currentUser){ %>
+        <% if(currentUser.identity==='seller'){ %>
+           <a id="update" href="/products/<%=product._id%>/edit"><i class="fa-solid fa-pen fa-2xl" style="color: blue;"></i><br><br>UPDATE</a>
+        <% } %>
+        <% } %> 
+        <% if(currentUser){ %>    
+        <% if(currentUser.identity==='buyer'){ %>    
+            <a id="addToCart" href="/products/<%=product._id%>/<%= currentUser._id%>/cart"><i class="fa-solid fa-cart-shopping fa-2xl" style="color: green;"></i><br><br>ADD</a>  
+        <% } %>
+        <% } %>
+    </div>
+
+</div>
+
+ 
+
+<div id="formdiv" style="background-color: #e5e5e5;">
+<!-- <div id="formdiv" style="background-color: #e3d5ca;"> -->
+    <form action="/products/<%=product._id%>/review" method="post">
+        
+        <fieldset>
+            <label for="rating" style="font-size: 30px;color:black">Feedback Rating: </label>
+            <!-- <input type="range" id="rating" name="rating" step="1" min="0" max="10"> -->
+            <br>
+            <span class="fa-solid fa-star star str" onclick="rate(1)" id="star1" onmouseover="addClass(0)" onmouseout="removeClass(0)"></span>
+            <span class="fa-solid fa-star star str" onclick="rate(2)" id="star2" onmouseover="addClass(1)" onmouseout="removeClass(1)"></span>
+            <span class="fa-solid fa-star star str" onclick="rate(3)" id="star3" onmouseover="addClass(2)" onmouseout="removeClass(2)"></span>
+            <span class="fa-solid fa-star star str" onclick="rate(4)" id="star4" onmouseover="addClass(3)" onmouseout="removeClass(3)"></span>
+            <span class="fa-solid fa-star star str" onclick="rate(5)" id="star5" onmouseover="addClass(4)" onmouseout="removeClass(4)"></span>
+            
+            <input id="hiddenInput" type="hidden"  name="rating">
+            <br>
+            <br>
+            <label for="review" style="font-size: 30px;color:black;">Comment please:  </label>
+            <br>
+            <textarea name="text" id="rating" cols="40" rows="5"></textarea>
+            <br>
+            <button id="button" class="btn btn-success" style="z-index: 1001 !important;flex:none !important;color: white;">SUBMIT</button>
+        </fieldset>
+    </form>
+    <br><br><br>
+    <h2 style="background-color:white;color:black;height: 70px;">Customer's Review</h2>
+    <% for(let review of product.review){ %>
+        <div id="reviewContainer">
+                <div style="display: inline-block;right:100px;font-size: 28px;position: relative;bottom:10px;"><i style="margin-right: 10px;" class="fa-solid fa-user fa-xl"></i><%= review.owner %></div>
+          
+            <div id="revRating" style="display: inline-block;">
+                
+                <% for(let i=1 ; i<=5 ; i++){ %>
+                    <% if(i<=review.rating){ %>
+                        <span class="fa checked star" style="color:yellow">&#9733; </span>
+                    <% }else{ %>
+                        <span class="fa star">&#9733; </span>
+                    <% } %>
+                <% } %>
+            </div>
+            <div id="ownerRevText"><%= review.text %></div>
+        </div>
+<% } %>
+    
+</div>
+</div>
+<script>
+    function rate(stars){
+        for(let i=1 ; i<=stars ; i++){
+            let star=document.querySelector(`#star${i}`);
+            star.style.color="yellow";
+        }
+        for(let i=stars+1 ; i<=5 ; i++){
+            let star=document.querySelector(`#star${i}`);
+            star.style.color="lightgray";
+        }
+        let hiddenInput=document.querySelector("#hiddenInput");
+        hiddenInput.value=stars;
+        console.log(hiddenInput.value)
+
+        
+    }
+  function addClass(star) {
+    let stars=document.querySelectorAll(".str");
+    for(let i=0 ; i<=star ; i++){
+            stars[i].classList.add("fa-bounce");
+    }
+  }
+  function removeClass(star) {
+    let stars=document.querySelectorAll(".str");
+    for(let i=0 ; i<=star ; i++){
+            stars[i].classList.remove("fa-bounce");
+    }
+  }
+</script>
