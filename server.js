@@ -17,8 +17,8 @@ var GoogleStrategy = require('passport-google-oauth20').Strategy;
 const rawData = fs.readFileSync('data.json');
 const responses = JSON.parse(rawData);
 const bodyParser=require('body-parser'); 
-const dotenv = require('dotenv');  
-dotenv.config() ;
+const dotenv = require('dotenv').config();  
+// dotenv.config() ;
 
 const PORT= process.env.PORT || 8000;
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
@@ -26,6 +26,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 app.use(bodyParser.json());
   
 mongoose.connect('mongodb://127.0.0.1:27017/made')
+// mongoose.connect('proces.env.MONGO_URL')
 .then(()=> console.log("db connected sucessfully".yellow)) 
 .catch((err)=> console.log(err));
 
