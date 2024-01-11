@@ -1,4 +1,4 @@
-# KFC Clone - Food Ordering Website
+# Food Ordering Website
 
 Welcome to our KFC Clone project! This repository hosts the code for our delicious food ordering platform inspired by the famous KFC restaurant.
 
